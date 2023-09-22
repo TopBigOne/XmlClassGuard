@@ -3,9 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'androidx.navigation.safeargs'
 }
-apply from: 'aabresguard.gradle'
+//apply from: 'aabresguard.gradle'
 
-apply from: 'xmlclassguard.gradle'
+//apply from: 'xmlclassguard.gradle'
 
 android {
     namespace 'com.ljx.example'
@@ -21,12 +21,37 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
+
+    signingConfigs {
+        debug{
+            keyAlias 'jar'
+            keyPassword '1qaz2wsx'
+            storeFile file('jar.xml')
+            storePassword '1qaz2wsx'
+        }
+        release {
+            keyAlias 'jar'
+            keyPassword '1qaz2wsx'
+            storeFile file('jar.xml')
+            storePassword '1qaz2wsx'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
